@@ -1,0 +1,38 @@
+{
+  "name": "kubernetes-container-terminal",
+  "version": "0.0.1",
+  "description": "Provides a terminal for a kubernetes container in a pod.",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "kubernetes",
+    "angularjs",
+    "termjs"
+  ],
+  "authors": [
+    "Stef Walter <stefw@redhat.com>"
+  ],
+  "ignore": [
+    "**/.*",
+    "Gruntfile.js",
+    "*.html",
+    "package.json",
+    "/container-terminal.*",
+    "node_modules",
+    "bower_components",
+    "scratch"
+  ],
+  "main": [
+    "dist/container-terminal.js",
+    "dist/container-terminal.css"
+  ],
+  "dependencies": {
+    "angular": ">=1.3.8 <1.5",
+    "term.js": "#0.0.3",
+    "font-awesome": "*"
+  },
+  "devDependencies": {
+    "patternfly": ">=1.2.1"
+  }
+}

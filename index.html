@@ -1,0 +1,73 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <title>Container Terminal Example</title>
+    <meta name="viewport" content="width=device-width">
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 20px !important; font-family: sans-serif; }
+        label { display: block !important; }
+        label span { float: left; width: 100px; margin-top: 2px; }
+        label .form-control { display: inline !important; width: 300px; }
+        body > div { margin-top: 15px; }
+        kubernetes-container-terminal { }
+    </style>
+    <link rel="stylesheet" href="bower_components/patternfly/dist/css/patternfly.css">
+    <link rel="stylesheet" href="bower_components/patternfly/dist/css/patternfly-additions.css">
+    <link rel="stylesheet" href="container-terminal.css">
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/term.js/src/term.js"></script>
+    <script src="container-terminal.js"></script>
+</head>
+<body ng-app="exampleApp">
+
+    <kubernetes-container-terminal resource="selfLink" container="containerName"
+        constructor="CustomWebSocket" url="base" state="terminalState">
+    </kubernetes-container-terminal>
+
+    <div>
+        <label>
+            <span>Endpoint</span>
+            <input type="text" class="form-control" ng-model="base"/>
+        </label>
+        <label>
+            <span>Pod link</span>
+            <input type="text" class="form-control" ng-model="selfLink"/>
+        </label>
+        <label>
+            <span>Container</span>
+            <input type="text" class="form-control" ng-model="containerName"/>
+        </label>
+        <label>
+            <span>Access Token</span>
+            <input type="text" class="form-control" ng-model="accessToken"/>
+        </label>
+        <label>
+            <span>State: {{terminalState|json}}</span>
+            <button class="btn btn-primary" ng-click="terminalState = null">Connect</button>
+        </label>
+    </div>
+
+    <script type="text/javascript">
+        angular.module('exampleApp', ['kubernetesUI'])
+            .run(function($rootScope) {
+                $rootScope.base = "ws://localhost:8080";
+                $rootScope.selfLink = "/api/v1/namespaces/default/pods/frontend-19kon";
+                $rootScope.terminalState = null;
+                $rootScope.containerName = "";
+
+                /*
+                 * Demonstrate how to use a custom constructor, and
+                 * use it to slip in our access_token into the URL.
+                 */
+                $rootScope.CustomWebSocket = function(url, protocols) {
+                    if ($rootScope.accessToken)
+                        url += "&access_token=" + $rootScope.accessToken;
+                    return new WebSocket(url, protocols);
+                };
+            });
+    </script>
+
+</body>
+</html>
