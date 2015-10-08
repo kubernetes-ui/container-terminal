@@ -41,6 +41,7 @@ kubernetes-container-terminal .terminal-actions {
     z-index: 1;
 }
 
+/* https://github.com/patternfly/patternfly/pull/135 */
 .spinner-white {
     border-bottom: 4px solid rgba(255, 255, 255, 0.25);
     border-left: 4px solid rgba(255, 255, 255, 0.25);

@@ -47,58 +47,57 @@ Make sure your angular app / module includes ```kubernetesUI``` as a module depe
 angular.module('exampleApp', ['kubernetesUI'])
 ```
 
-Now include the graph:
+Now include the terminal in your HTML. You must already have a pod resource, or a string
+URL in the current scope you pass to the terminal for its initialization.
 
 ```xml
-<kubernetes-container-terminal >
+<kubernetes-container-terminal pod="pod_resource">
 </kubernetes-container-terminal>
 ```
 
 Documentation
 -------------
 
-#### =url
+#### &pod
 
-An optional base URL of the API endpoint. If a ```resource``` is specified, then
-the ```resource.metadata.selfLink``` will be added to this URL. If no resource
-is specified, then the url will will be used as is. If not specified, then the
-URL will be automatically determined from the current document location. This URL
-should start with either ```ws://``` or ```wss://```.
+Required. Either a URL path of the pod as a string, or a Kubernetes resource Pod object.
+If the latter then ```resource.metadata.selfLink``` will be used as the URL.
 
-#### =resource
-
-An optional Kubernetes resource Pod object. If set, the ```resource.metadata.selfLink```
-will be added to the ```url```.
-
-#### =container
+#### &container
 
 The name of the container in the Pod to open the terminal for. If not specified then
 Kubernetes will connect to one of the containers.
 
-#### =command
+#### @command
 
 The command to run. Either an executable string, or an array containing the executable
 and all the arguments. If not specified will default to running an interactive shell.
 
-#### =state
+#### =prevent
 
-Reflects the current state of the connection. These are the same as the WebSocket
-readyState constants. The following values:
+If set to ```true``` then the widget will not start connecting automatically. It will
+wait for either user action or for the ```prevent``` flag to be cleared.
 
- * CONNECT = null
- * CONNECTING = 0
- * OPEN = 1
- * CLOSING = 2
- * CLOSED = 3
+#### Container Socket Service
 
-In particular, if the caller sets the state to CLOSED or CLOSING, then the terminal
-will close its connection. If the state is set to CONNECT then the terminal will
-connect (or reconnect), and change the state as it does so.
+There is a container socket service that the terminal widget uses to create the
+WebSocket objects. The default implementation uses the current document location
+to qualify the ```pod``` URL.
 
-#### =constructor
+You can specify a custom Factory like this:
 
-Optional constructor function to use to create the WebSocket.
-
+```javascript
+angular.module("myFancyThings")
+    .config(function(kubernetesContainerSocketProvider) {
+        kubernetesContainerSocketProvider.WebSocketFactory = "MyWebSockets";
+    })
+    .factory("MyWebSockets", function() {
+        return function MyWebSocket(url, protocols) {
+            url = "wss://example.com" + url + "&access_token=blahblahblah";
+            return new WebSocket(url, protocols);
+        };
+    });
+```
 
 Styling
 -------

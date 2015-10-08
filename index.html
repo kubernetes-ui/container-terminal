@@ -22,14 +22,13 @@
 </head>
 <body ng-app="exampleApp">
 
-    <kubernetes-container-terminal resource="selfLink" container="containerName"
-        constructor="CustomWebSocket" url="base" state="terminalState">
+    <kubernetes-container-terminal pod="selfLink" container="containerName" prevent="preventSocket">
     </kubernetes-container-terminal>
 
     <div>
         <label>
             <span>Endpoint</span>
-            <input type="text" class="form-control" ng-model="base"/>
+            <input type="text" class="form-control" ng-model="baseUrl"/>
         </label>
         <label>
             <span>Pod link</span>
@@ -43,25 +42,26 @@
             <span>Access Token</span>
             <input type="text" class="form-control" ng-model="accessToken"/>
         </label>
-        <label>
-            <span>State: {{terminalState|json}}</span>
-            <button class="btn btn-primary" ng-click="terminalState = null">Connect</button>
-        </label>
     </div>
 
     <script type="text/javascript">
         angular.module('exampleApp', ['kubernetesUI'])
-            .run(function($rootScope) {
-                $rootScope.base = "ws://localhost:8080";
-                $rootScope.selfLink = "/api/v1/namespaces/default/pods/frontend-19kon";
-                $rootScope.terminalState = null;
-                $rootScope.containerName = "";
+            .config(function(kubernetesContainerSocketProvider) {
+                kubernetesContainerSocketProvider.WebSocketFactory = "CustomWebSockets";
+            })
 
-                /*
-                 * Demonstrate how to use a custom constructor, and
-                 * use it to slip in our access_token into the URL.
-                 */
-                $rootScope.CustomWebSocket = function(url, protocols) {
+            .run(function($rootScope) {
+                $rootScope.baseUrl = "ws://localhost:8080";
+                $rootScope.selfLink = "/api/v1/namespaces/default/pods/frontend-19kon";
+                $rootScope.containerName = "";
+                $rootScope.accessToken = "";
+                $rootScope.preventSocket = true;
+            })
+
+            /* Our custom WebSocket factory adapts the url */
+            .factory("CustomWebSockets", function($rootScope) {
+                return function CustomWebSocket(url, protocols) {
+                    url = $rootScope.baseUrl + url;
                     if ($rootScope.accessToken)
                         url += "&access_token=" + $rootScope.accessToken;
                     return new WebSocket(url, protocols);
