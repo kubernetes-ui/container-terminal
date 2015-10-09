@@ -80,7 +80,7 @@
                         var spinner = angular.element("<div class='spinner spinner-white hidden'>");
 
                         var button = angular.element("<button class='btn btn-default fa-refresh'>");
-                        button.on("click", connect);
+                        button.on("click", connect).attr("title", "Connect");
 
                         element.append(angular.element("<div class='terminal-actions'>")
                                             .append(spinner).append(button));
@@ -164,7 +164,13 @@
                             };
 
                             ws.onclose = function(ev) {
-                                var reason = ev.reason || "disconnected";
+                                var reason = ev.reason;
+                                if (!reason && first)
+                                    reason = "Could not connect to the container. Do you have sufficient privileges?";
+                                if (!reason)
+                                    reason = "disconnected";
+                                if (!first)
+                                    reason = "\r\n" + reason;
                                 term.write('\x1b[31m' + reason + '\x1b[m\r\n');
                                 scope.$apply(disconnect);
                             };
