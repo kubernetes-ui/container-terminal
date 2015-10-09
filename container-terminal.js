@@ -62,8 +62,8 @@
             ];
         })
         .directive('kubernetesContainerTerminal', [
-            "kubernetesContainerSocket",
-            function(kubernetesContainerSocket) {
+            "$q", "kubernetesContainerSocket",
+            function($q, kubernetesContainerSocket) {
                 return {
                     restrict: 'E',
                     scope: {
@@ -91,12 +91,13 @@
                         var term = new Terminal({
                             cols: 80,
                             rows: 24,
-                            screenKeys: true,
-                            cursorHidden: true
+                            screenKeys: true
                         });
 
                         outer.empty();
                         term.open(outer[0]);
+                        term.cursorHidden = true;
+                        term.refresh(term.x, term.y);
 
                         term.on('data', function(data) {
                             if (ws && ws.readyState === 1)
@@ -105,6 +106,8 @@
 
                         function connect() {
                             disconnect();
+
+                            term.reset();
 
                             var url = "";
 
@@ -132,51 +135,56 @@
                                 url += "&command=" + encodeURIComponent(arg);
                             });
 
-                            ws = new kubernetesContainerSocket(url, "base64.channel.k8s.io");
-
-                            term.reset();
-
-                            ws.onopen = function(ev) {
-                                alive = window.setInterval(function() {
-                                    ws.send("0");
-                                }, 30 * 1000);
-                            };
-
                             var first = true;
-
-                            ws.onmessage = function(ev) {
-                                var data = ev.data.slice(1);
-                                switch(ev.data[0]) {
-                                case '1':
-                                case '2':
-                                case '3':
-                                    term.write(atob(data));
-                                    break;
-                                }
-                                if (first) {
-                                    first = false;
-                                    spinner.addClass("hidden");
-                                    button.addClass("hidden");
-                                    term.cursorHidden = false;
-                                    term.showCursor();
-                                    term.refresh(term.y, term.y);
-                                }
-                            };
-
-                            ws.onclose = function(ev) {
-                                var reason = ev.reason;
-                                if (!reason && first)
-                                    reason = "Could not connect to the container. Do you have sufficient privileges?";
-                                if (!reason)
-                                    reason = "disconnected";
-                                if (!first)
-                                    reason = "\r\n" + reason;
-                                term.write('\x1b[31m' + reason + '\x1b[m\r\n');
-                                scope.$apply(disconnect);
-                            };
-
                             spinner.removeClass("hidden");
                             button.addClass("hidden");
+
+                            function fatal(message) {
+                                if (!message && first)
+                                    message = "Could not connect to the container. Do you have sufficient privileges?";
+                                if (!message)
+                                    message = "disconnected";
+                                if (!first)
+                                    message = "\r\n" + message;
+                                term.write('\x1b[31m' + message + '\x1b[m\r\n');
+                                scope.$apply(disconnect);
+                            }
+
+                            $q.when(kubernetesContainerSocket(url, "base64.channel.k8s.io"),
+                                function resolved(ws) {
+                                    ws.onopen = function(ev) {
+                                        alive = window.setInterval(function() {
+                                            ws.send("0");
+                                        }, 30 * 1000);
+                                    };
+
+                                    ws.onmessage = function(ev) {
+                                        var data = ev.data.slice(1);
+                                        switch(ev.data[0]) {
+                                        case '1':
+                                        case '2':
+                                        case '3':
+                                            term.write(atob(data));
+                                            break;
+                                        }
+                                        if (first) {
+                                            first = false;
+                                            spinner.addClass("hidden");
+                                            button.addClass("hidden");
+                                            term.cursorHidden = false;
+                                            term.showCursor();
+                                            term.refresh(term.y, term.y);
+                                        }
+                                    };
+
+                                    ws.onclose = function(ev) {
+                                        fatal(ev.reason);
+                                    };
+                                },
+                                function rejected(ex) {
+                                    fatal(ex.message);
+                                }
+                            );
                         }
 
                         function disconnect() {
@@ -186,7 +194,7 @@
                             /* There's no term.hideCursor() function */
                             if (term) {
                                 term.cursorHidden = true;
-                                term.refresh(term.y, term.y);
+                                term.refresh(term.x, term.y);
                             }
 
                             if (ws) {
