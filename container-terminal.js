@@ -151,7 +151,9 @@
                             }
 
                             $q.when(kubernetesContainerSocket(url, "base64.channel.k8s.io"),
-                                function resolved(ws) {
+                                function resolved(socket) {
+                                    ws = socket;
+
                                     ws.onopen = function(ev) {
                                         alive = window.setInterval(function() {
                                             ws.send("0");

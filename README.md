@@ -6,6 +6,8 @@ Provides a simple container TTY for Kubernetes pods.
 #### Disclaimer
 This is an early implementation and is subject to change.
 
+Requires: [https://github.com/kubernetes/kubernetes/pull/13885](https://github.com/kubernetes/kubernetes/pull/13885)
+
 ![Screenshot](https://raw.githubusercontent.com/kubernetes-ui/container-terminal/master/scratch/sceenshot.png)
 
 Getting Started
