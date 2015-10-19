@@ -79,7 +79,7 @@
 
                         var spinner = angular.element("<div class='spinner spinner-white hidden'>");
 
-                        var button = angular.element("<button class='btn btn-default fa-refresh'>");
+                        var button = angular.element("<button class='btn btn-default fa fa-refresh'>");
                         button.on("click", connect).attr("title", "Connect");
 
                         element.append(angular.element("<div class='terminal-actions'>")
