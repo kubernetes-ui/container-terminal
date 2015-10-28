@@ -201,7 +201,7 @@
 
                             if (ws) {
                                 ws.onopen = ws.onmessage = ws.onerror = ws.onclose = null;
-                                if (ws.readyState < 2) /* CLOSING */
+                                if (ws.readyState < 2) // CLOSING
                                     ws.close();
                                 ws = null;
                             }
