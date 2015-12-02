@@ -41,7 +41,7 @@
                         else
                             url = "wss://" + window.location.host + url;
                     }
-                    return new WebSocket(url, protocols);
+                    return new window.WebSocket(url, protocols);
                 };
             };
 
@@ -101,7 +101,7 @@
 
                         term.on('data', function(data) {
                             if (ws && ws.readyState === 1)
-                                ws.send("0" + btoa(data));
+                                ws.send("0" + window.btoa(data));
                         });
 
                         function connect() {
@@ -166,7 +166,7 @@
                                         case '1':
                                         case '2':
                                         case '3':
-                                            term.write(atob(data));
+                                            term.write(window.atob(data));
                                             break;
                                         }
                                         if (first) {
