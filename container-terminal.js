@@ -70,7 +70,10 @@
                         pod: '&',
                         container: '&',
                         command: '@',
-                        prevent: '='
+                        prevent: '=',
+                        rows: '=',
+                        cols: '=',
+                        screenKeys: '='
                     },
                     link: function(scope, element, attrs) {
                         /* term.js wants the parent element to build its terminal inside of */
@@ -89,9 +92,9 @@
                         var ws = null;
 
                         var term = new Terminal({
-                            cols: 80,
-                            rows: 24,
-                            screenKeys: true
+                            cols: scope.cols || 80,
+                            rows: scope.rows || 24,
+                            screenKeys: scope.screenKeys || true
                         });
 
                         outer.empty();
