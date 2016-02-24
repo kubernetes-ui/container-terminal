@@ -4,7 +4,7 @@ kubernetes-container-terminal {
 }
 
 kubernetes-container-terminal .terminal {
-    font-family: Menlo, Monaco, Consolas, monospace;
+    font-family: "Monospace Regular", "DejaVu Sans Mono", Menlo, Monaco, Consolas, monospace;
     font-size: 10px;
     color: #F0F0F0;
     text-align: left;
