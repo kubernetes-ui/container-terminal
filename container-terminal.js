@@ -73,7 +73,8 @@
                         prevent: '=',
                         rows: '=',
                         cols: '=',
-                        screenKeys: '='
+                        screenKeys: '=',
+                        autofocus: '=?'
                     },
                     link: function(scope, element, attrs) {
                         /* term.js wants the parent element to build its terminal inside of */
@@ -179,6 +180,9 @@
                                             term.cursorHidden = false;
                                             term.showCursor();
                                             term.refresh(term.y, term.y);
+                                            if (scope.autofocus && term.element) {
+                                              term.element.focus();
+                                            }
                                         }
                                     };
 
