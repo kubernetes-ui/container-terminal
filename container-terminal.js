@@ -28,6 +28,14 @@
     /* The kubernetesUI component is quite loosely bound, define if it doesn't exist */
     try { angular.module("kubernetesUI"); } catch(e) { angular.module("kubernetesUI", []); }
 
+    // https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/btoa
+    function utf8_to_b64( str ) {
+        return window.btoa(window.unescape(encodeURIComponent( str )));
+    }
+    function b64_to_utf8( str ) {
+        return decodeURIComponent(window.escape(window.atob( str )));
+    }
+
     return angular.module('kubernetesUI')
         .provider('kubernetesContainerSocket', function() {
             var self = this;
@@ -105,7 +113,7 @@
 
                         term.on('data', function(data) {
                             if (ws && ws.readyState === 1)
-                                ws.send("0" + window.btoa(data));
+                                ws.send("0" + utf8_to_b64(data));
                         });
 
                         function connect() {
@@ -170,7 +178,7 @@
                                         case '1':
                                         case '2':
                                         case '3':
-                                            term.write(window.atob(data));
+                                            term.write(b64_to_utf8(data));
                                             break;
                                         }
                                         if (first) {
