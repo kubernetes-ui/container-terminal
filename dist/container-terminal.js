@@ -82,9 +82,12 @@
                         rows: '=',
                         cols: '=',
                         screenKeys: '=',
-                        autofocus: '=?'
+                        autofocus: '=?',
+                        status: '='
                     },
                     link: function(scope, element, attrs) {
+                        scope.status = 'disconnected';
+
                         /* term.js wants the parent element to build its terminal inside of */
                         var outer = angular.element("<div class='terminal-wrapper'>");
                         element.append(outer);
@@ -159,6 +162,7 @@
                                 if (!first)
                                     message = "\r\n" + message;
                                 term.write('\x1b[31m' + message + '\x1b[m\r\n');
+                                scope.status = 'disconnected';
                                 scope.$apply(disconnect);
                             }
 
@@ -195,6 +199,7 @@
                                     };
 
                                     ws.onclose = function(ev) {
+                                        scope.status = 'disconnected';
                                         fatal(ev.reason);
                                     };
                                 },
@@ -202,9 +207,11 @@
                                     fatal(ex.message);
                                 }
                             );
+                            scope.status = 'connected';
                         }
 
                         function disconnect() {
+                            scope.status = 'disconnected';
                             spinner.addClass("hidden");
                             button.removeClass("hidden");
 
