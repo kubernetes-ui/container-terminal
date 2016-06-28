@@ -80,6 +80,12 @@ and all the arguments. If not specified will default to running an interactive s
 If set to ```true``` then the widget will not start connecting automatically. It will
 wait for either user action or for the ```prevent``` flag to be cleared.
 
+#### =status
+
+Reports the connectivity status of the terminal back to the parent scope. The two
+states currently implemented are ```connected``` and ```disconnected```. This is
+not an input.
+
 #### Container Socket Service
 
 There is a container socket service that the terminal widget uses to create the
