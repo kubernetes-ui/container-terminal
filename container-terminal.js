@@ -102,10 +102,12 @@
 
                         var alive = null;
                         var ws = null;
+                        var defaultCols = 80;
+                        var defaultRows = 24;
 
                         var term = new Terminal({
-                            cols: scope.cols || 80,
-                            rows: scope.rows || 24,
+                            cols: scope.cols || defaultCols,
+                            rows: scope.rows || defaultRows,
                             screenKeys: scope.screenKeys || true
                         });
 
@@ -231,6 +233,15 @@
                             window.clearInterval(alive);
                             alive = null;
                         }
+
+                        scope.$watchGroup(["cols", "rows"], function(newValues) {
+                          var cols = newValues[0] || defaultCols;
+                          var rows = newValues[1] || defaultRows;
+                          term.resize(cols, rows);
+                          if (ws && ws.readyState === 1) {
+                            ws.send("4" + window.btoa('{"Width":' + cols + ',"Height":' + rows + '}'));                
+                          }                           
+                        });
 
                         scope.$watch("prevent", function(prevent) {
                             if (!prevent)

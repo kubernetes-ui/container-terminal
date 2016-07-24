@@ -22,7 +22,7 @@
 </head>
 <body ng-app="exampleApp">
 
-    <kubernetes-container-terminal pod="selfLink" container="containerName" prevent="preventSocket" rows="24" cols="80" screen-keys="true" autofocus="true">
+    <kubernetes-container-terminal pod="selfLink" container="containerName" prevent="preventSocket" rows="rows" cols="cols"  screen-keys="true" autofocus="true">
     </kubernetes-container-terminal>
 
     <div>
@@ -42,6 +42,14 @@
             <span>Access Token</span>
             <input type="text" class="form-control" ng-model="accessToken"/>
         </label>
+        <label>
+            <span>Rows</span>
+            <input type="text" class="form-control" ng-model="rows"/>
+        </label>
+        <label>
+            <span>Cols</span>
+            <input type="text" class="form-control" ng-model="cols"/>
+        </label>                
     </div>
 
     <script type="text/javascript">
