@@ -121,6 +121,15 @@
                                 ws.send("0" + utf8_to_b64(data));
                         });
 
+                        var sizeTerminal = function() {
+                          var cols = scope.cols || defaultCols;
+                          var rows = scope.rows || defaultRows;
+                          term.resize(cols, rows);
+                          if (ws && ws.readyState === 1) {
+                            ws.send("4" + window.btoa('{"Width":' + cols + ',"Height":' + rows + '}'));                
+                          }
+                        };
+
                         function connect() {
                             disconnect();
 
@@ -176,6 +185,8 @@
                                         alive = window.setInterval(function() {
                                             ws.send("0");
                                         }, 30 * 1000);
+                                        // make sure terminal is reset to the right size in case the terminal was resized while the connection was opening
+                                        sizeTerminal();                    
                                     };
 
                                     ws.onmessage = function(ev) {
@@ -234,14 +245,7 @@
                             alive = null;
                         }
 
-                        scope.$watchGroup(["cols", "rows"], function(newValues) {
-                          var cols = newValues[0] || defaultCols;
-                          var rows = newValues[1] || defaultRows;
-                          term.resize(cols, rows);
-                          if (ws && ws.readyState === 1) {
-                            ws.send("4" + window.btoa('{"Width":' + cols + ',"Height":' + rows + '}'));                
-                          }                           
-                        });
+                        scope.$watchGroup(["cols", "rows"], sizeTerminal);
 
                         scope.$watch("prevent", function(prevent) {
                             if (!prevent)
