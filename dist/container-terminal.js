@@ -77,13 +77,13 @@
                     scope: {
                         pod: '&',
                         container: '&',
-                        command: '=',
-                        prevent: '=',
-                        rows: '=',
-                        cols: '=',
-                        screenKeys: '=',
+                        command: '=?',
+                        prevent: '=?',
+                        rows: '=?',
+                        cols: '=?',
+                        screenKeys: '=?',
                         autofocus: '=?',
-                        status: '='
+                        status: '=?'
                     },
                     link: function(scope, element, attrs) {
                         scope.status = 'disconnected';
