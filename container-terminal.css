@@ -35,7 +35,7 @@ kubernetes-container-terminal .terminal-wrapper {
 kubernetes-container-terminal .terminal-actions {
     display: inline-block;
     vertical-align: top;
-    position: relative;
+    position: absolute;
     top: 10px;
     right: 34px;
     z-index: 1;
