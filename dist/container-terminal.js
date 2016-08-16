@@ -77,7 +77,7 @@
                     scope: {
                         pod: '&',
                         container: '&',
-                        command: '@',
+                        command: '=',
                         prevent: '=',
                         rows: '=',
                         cols: '=',
