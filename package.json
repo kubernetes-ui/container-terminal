@@ -1,7 +1,10 @@
 {
-  "description": "This is just use to pull devel dependencies",
   "name": "kubernetes-container-terminal",
-  "private": true,
+  "description": "Provides a terminal for a kubernetes container in a pod.",
+  "author": "Stef Walter",
+  "version": "1.0.3",
+  "license": "LGPL 2+",
+  "main": "dist/container-terminal.js",
   "devDependencies": {
     "bower": "*",
     "grunt": "~0.4.5",
