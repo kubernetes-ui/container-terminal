@@ -23,8 +23,9 @@ kubernetes-container-terminal .terminal {
 }
 
 kubernetes-container-terminal .terminal-cursor {
-    color: #000;
     background: #f0f0f0;
+    color: #000;
+    position: absolute;
 }
 
 kubernetes-container-terminal .terminal-wrapper {
