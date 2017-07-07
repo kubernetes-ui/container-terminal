@@ -1,6 +1,6 @@
 kubernetes-container-terminal {
     position: relative;
-    display: block;
+    display: inline-block;
 }
 
 kubernetes-container-terminal .terminal {
@@ -9,11 +9,9 @@ kubernetes-container-terminal .terminal {
     color: #F0F0F0;
     text-align: left;
     outline: medium none;
-    background-color: black;
-    border: 1px solid black;
-    padding: 10px;
-    display: inline-block; /* size DIV to contents */
+    border: 3px solid black;
     line-height: 1em;
+    display: inline-block;    
 }
 
 @media (min-width: 568px) {
@@ -25,12 +23,11 @@ kubernetes-container-terminal .terminal {
 kubernetes-container-terminal .terminal-cursor {
     background: #f0f0f0;
     color: #000;
-    position: absolute;
 }
 
 kubernetes-container-terminal .terminal-wrapper {
-    display: inline-block;
     vertical-align: top;
+    display: inline-block;
 }
 
 kubernetes-container-terminal .terminal-actions {
@@ -40,6 +37,10 @@ kubernetes-container-terminal .terminal-actions {
     top: 10px;
     right: 34px;
     z-index: 1;
+}
+
+kubernetes-container-terminal .terminal .xterm-viewport {
+    overflow-y: auto;
 }
 
 /* https://github.com/patternfly/patternfly/pull/135 */
