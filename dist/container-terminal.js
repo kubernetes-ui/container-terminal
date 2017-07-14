@@ -110,7 +110,8 @@
                             rows: scope.rows || defaultRows,
                             cursorBlink: true,
                             screenKeys: scope.screenKeys || true,
-                            mouseEvents: true
+                            applicationCursor: true, // Needed for proper scrollback behavior in applications like vi
+                            mouseEvents: true        // Needed for proper scrollback behavior in applications like vi
                         });
 
                         outer.empty();
