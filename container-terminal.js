@@ -108,7 +108,10 @@
                         var term = new Terminal({
                             cols: scope.cols || defaultCols,
                             rows: scope.rows || defaultRows,
-                            screenKeys: scope.screenKeys || true
+                            cursorBlink: true,
+                            screenKeys: scope.screenKeys || true,
+                            applicationCursor: true, // Needed for proper scrollback behavior in applications like vi
+                            mouseEvents: true        // Needed for proper scrollback behavior in applications like vi
                         });
 
                         outer.empty();
@@ -121,10 +124,24 @@
                                 ws.send("0" + utf8_to_b64(data));
                         });
 
+                        var sizeViewport = function () {
+                          var cols = scope.cols || defaultCols;
+                          if (!term.charMeasure.width) {
+                            return;
+                          }
+                          var xtermViewport = document.getElementsByClassName("xterm-viewport")[0];
+                          // character width * number of columns + space for a scrollbar
+                          // TODO determine the max width of a scrollbar across browsers
+                          xtermViewport.style.width = (term.charMeasure.width * cols + 17) + "px";
+                        };
+
+                        term.charMeasure.on('charsizechanged', sizeViewport);
+
                         var sizeTerminal = function() {
                           var cols = scope.cols || defaultCols;
                           var rows = scope.rows || defaultRows;
                           term.resize(cols, rows);
+                          sizeViewport();
                           if (ws && ws.readyState === 1) {
                             ws.send("4" + window.btoa('{"Width":' + cols + ',"Height":' + rows + '}'));                
                           }
