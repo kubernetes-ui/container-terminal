@@ -223,7 +223,7 @@
                                             term.showCursor();
                                             term.refresh(term.y, term.y);
                                             if (scope.autofocus && term.element) {
-                                              term.element.focus();
+                                              term.focus();
                                             }
                                         }
                                     };
