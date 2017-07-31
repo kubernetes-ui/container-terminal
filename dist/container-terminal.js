@@ -129,7 +129,7 @@
                           if (!term.charMeasure.width) {
                             return;
                           }
-                          var xtermViewport = document.getElementsByClassName("xterm-viewport")[0];
+                          var xtermViewport = element[0].getElementsByClassName("xterm-viewport")[0];
                           // character width * number of columns + space for a scrollbar
                           // TODO determine the max width of a scrollbar across browsers
                           xtermViewport.style.width = (term.charMeasure.width * cols + 17) + "px";
