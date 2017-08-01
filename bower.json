@@ -1,6 +1,6 @@
 {
     "name": "kubernetes-container-terminal",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "description": "Provides a terminal for a kubernetes container in a pod.",
     "moduleType": [
         "globals"
