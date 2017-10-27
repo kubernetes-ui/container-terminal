@@ -117,7 +117,7 @@
                         outer.empty();
                         term.open(outer[0]);
                         term.cursorHidden = true;
-                        term.refresh(term.x, term.y);
+                        term.refresh(term.buffer.y, term.buffer.y);
 
                         term.on('data', function(data) {
                             if (ws && ws.readyState === 1)
@@ -221,7 +221,6 @@
                                             button.addClass("hidden");
                                             term.cursorHidden = false;
                                             term.showCursor();
-                                            term.refresh(term.y, term.y);
                                             if (scope.autofocus && term.element) {
                                               term.focus();
                                             }
@@ -248,7 +247,7 @@
                             /* There's no term.hideCursor() function */
                             if (term) {
                                 term.cursorHidden = true;
-                                term.refresh(term.x, term.y);
+                                term.refresh(term.buffer.y, term.buffer.y);
                             }
 
                             if (ws) {
