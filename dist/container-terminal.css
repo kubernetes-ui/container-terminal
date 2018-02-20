@@ -1,46 +1,13 @@
-kubernetes-container-terminal {
-    position: relative;
-    display: inline-block;
+kubernetes-container-terminal,
+kubernetes-container-terminal .terminal-wrapper {
+  display: inline-block;
+  position: relative;
 }
 
 kubernetes-container-terminal .terminal {
-    font-family: "Monospace Regular", "DejaVu Sans Mono", Menlo, Monaco, Consolas, monospace;
-    font-size: 10px;
-    color: #F0F0F0;
-    text-align: left;
-    outline: medium none;
-    border: 3px solid black;
-    line-height: 1em;
-    display: inline-block;
-}
-
-@media (min-width: 568px) {
-    kubernetes-container-terminal .terminal {
-        font-size: 12px;
-    }
-}
-
-kubernetes-container-terminal .terminal-cursor {
-    background: #f0f0f0;
-    color: #000;
-}
-
-kubernetes-container-terminal .terminal-wrapper {
-    vertical-align: top;
-    display: inline-block;
-}
-
-kubernetes-container-terminal .terminal-actions {
-    display: inline-block;
-    vertical-align: top;
-    position: absolute;
-    top: 10px;
-    right: 34px;
-    z-index: 1;
-}
-
-kubernetes-container-terminal .terminal .xterm-viewport {
-    overflow-y: auto;
+  display: inline-block;
+  outline: medium none;
+  padding: 2px 0 2px 2px;
 }
 
 kubernetes-container-terminal .terminal .xterm-viewport::-webkit-scrollbar {
@@ -54,23 +21,24 @@ kubernetes-container-terminal .terminal .xterm-viewport::-webkit-scrollbar-corne
 }
 
 kubernetes-container-terminal .terminal .xterm-viewport::-webkit-scrollbar-thumb {
-    background-color: rgba(255,255,255,.25);
-    box-shadow: inset 1px 1px 0 rgba(255,255,255,.1),inset 0 -1px 0 rgba(255,255,255,.07);
+  background-color: rgba(255,255,255,.25);
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,.1),inset 0 -1px 0 rgba(255,255,255,.07);
 }
 
 kubernetes-container-terminal .terminal .xterm-viewport::-webkit-scrollbar-thumb:active,
 kubernetes-container-terminal .terminal .xterm-viewport::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(255,255,255,.35);
+  background-color: rgba(255,255,255,.35);
 }
 
 kubernetes-container-terminal .terminal .xterm-viewport::-webkit-scrollbar-track {
   background: transparent;
 }
 
-/* https://github.com/patternfly/patternfly/pull/135 */
-.spinner-white {
-    border-bottom: 4px solid rgba(255, 255, 255, 0.25) !important;
-    border-left: 4px solid rgba(255, 255, 255, 0.25) !important;
-    border-right: 4px solid rgba(255, 255, 255, 0.25) !important;
-    border-top: 4px solid rgba(255, 255, 255, 0.75) !important;
+kubernetes-container-terminal .terminal-actions {
+  display: inline-block;
+  position: absolute;
+  right: 34px;
+  top: 10px;
+  vertical-align: top;
+  z-index: 10;
 }
