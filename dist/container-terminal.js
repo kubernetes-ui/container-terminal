@@ -92,7 +92,7 @@
                         var outer = angular.element("<div class='terminal-wrapper'>");
                         element.append(outer);
 
-                        var spinner = angular.element("<div class='spinner spinner-white hidden'>");
+                        var spinner = angular.element("<div class='spinner spinner-inverse hidden'>");
 
                         var button = angular.element("<button class='btn btn-default fa fa-refresh'>");
                         button.on("click", connect).attr("title", "Connect");
@@ -109,6 +109,12 @@
                             cols: scope.cols || defaultCols,
                             rows: scope.rows || defaultRows,
                             cursorBlink: true,
+                            fontFamily: "'Courier New', 'Courier', monospace",
+                            fontSize: 12,
+                            lineHeight: 1,
+                            theme: {
+                              foreground: "#f0f0f0"
+                            },
                             screenKeys: scope.screenKeys || true,
                             applicationCursor: true, // Needed for proper scrollback behavior in applications like vi
                             mouseEvents: true        // Needed for proper scrollback behavior in applications like vi

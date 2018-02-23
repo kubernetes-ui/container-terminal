@@ -1,6 +1,6 @@
 {
     "name": "kubernetes-container-terminal",
-    "version": "2.1.1",
+    "version": "3.0.0",
     "description": "Provides a terminal for a kubernetes container in a pod.",
     "moduleType": [
         "globals"
@@ -29,7 +29,7 @@
     ],
     "dependencies": {
         "angular": ">=1.3.8 <1.6",
-        "xterm.js": "^2.9.0",
+        "xterm.js-next": "^3.1.0",
         "font-awesome": "*"
     },
     "devDependencies": {
