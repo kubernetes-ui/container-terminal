@@ -1,6 +1,6 @@
 {
     "name": "kubernetes-container-terminal",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "description": "Provides a terminal for a kubernetes container in a pod.",
     "moduleType": [
         "globals"
@@ -8,7 +8,7 @@
     "keywords": [
         "kubernetes",
         "angularjs",
-       "termjs"
+        "termjs"
     ],
     "authors": [
         "Stef Walter <stefw@redhat.com>"
