@@ -2,7 +2,7 @@
   "name": "kubernetes-container-terminal",
   "description": "Provides a terminal for a kubernetes container in a pod.",
   "author": "Stef Walter",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "license": "LGPL-2.1-or-later",
   "main": "dist/container-terminal.js",
   "devDependencies": {
