@@ -24,12 +24,13 @@
         "scratch"
     ],
     "main": [
+        "dist/xterm.js",
         "dist/container-terminal.js",
+        "dist/xterm.css",
         "dist/container-terminal.css"
     ],
     "dependencies": {
         "angular": ">=1.3.8 <1.6",
-        "xterm.js-next": "^3.1.0",
         "font-awesome": "*"
     },
     "devDependencies": {

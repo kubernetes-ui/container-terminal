@@ -123,7 +123,7 @@
                         outer.empty();
                         term.open(outer[0]);
                         term.cursorHidden = true;
-                        term.refresh(term.buffer.y, term.buffer.y);
+                        term.refresh(term._core.buffer.y, term._core.buffer.y);
 
                         term.on('data', function(data) {
                             if (ws && ws.readyState === 1)
@@ -132,16 +132,16 @@
 
                         var sizeViewport = function () {
                           var cols = scope.cols || defaultCols;
-                          if (!term.charMeasure.width) {
+                          if (!term._core.charMeasure.width) {
                             return;
                           }
                           var xtermViewport = element[0].getElementsByClassName("xterm-viewport")[0];
                           // character width * number of columns + space for a scrollbar
                           // TODO determine the max width of a scrollbar across browsers
-                          xtermViewport.style.width = (term.charMeasure.width * cols + 17) + "px";
+                          xtermViewport.style.width = (term._core.charMeasure.width * cols + 17) + "px";
                         };
 
-                        term.charMeasure.on('charsizechanged', sizeViewport);
+                        term._core.charMeasure.on('charsizechanged', sizeViewport);
 
                         var sizeTerminal = function() {
                           var cols = scope.cols || defaultCols;
@@ -149,7 +149,7 @@
                           term.resize(cols, rows);
                           sizeViewport();
                           if (ws && ws.readyState === 1) {
-                            ws.send("4" + window.btoa('{"Width":' + cols + ',"Height":' + rows + '}'));                
+                            ws.send("4" + window.btoa('{"Width":' + cols + ',"Height":' + rows + '}'));
                           }
                         };
 
@@ -209,7 +209,7 @@
                                             ws.send("0");
                                         }, 30 * 1000);
                                         // make sure terminal is reset to the right size in case the terminal was resized while the connection was opening
-                                        sizeTerminal();                    
+                                        sizeTerminal();
                                     };
 
                                     ws.onmessage = function(ev) {
@@ -226,7 +226,7 @@
                                             spinner.addClass("hidden");
                                             button.addClass("hidden");
                                             term.cursorHidden = false;
-                                            term.showCursor();
+                                            term._core.showCursor();
                                             if (scope.autofocus && term.element) {
                                               term.focus();
                                             }
@@ -253,7 +253,7 @@
                             /* There's no term.hideCursor() function */
                             if (term) {
                                 term.cursorHidden = true;
-                                term.refresh(term.buffer.y, term.buffer.y);
+                                term.refresh(term._core.buffer.y, term._core.buffer.y);
                             }
 
                             if (ws) {

@@ -13,6 +13,14 @@ module.exports = function(grunt) {
       css: {
         src: ['container-terminal.css'],
         dest: 'dist/container-terminal.css'
+      },
+      xtermDist: {
+        src: ['node_modules/xterm/dist/xterm.js'],
+        dest: 'dist/xterm.js'
+      },
+      xtermCSS: {
+        src: ['node_modules/xterm/dist/xterm.css'],
+        dest: 'dist/xterm.css'
       }
     },
     uglify: {
