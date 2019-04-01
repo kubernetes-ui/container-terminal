@@ -38,8 +38,9 @@ Include the JS and CSS files, after angularjs and d3:
 
 ```xml
 <script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/term.js/src/term.js"></script>
+<script src="bower_components/kubernetes-container-terminal/dist/xterm.js"></script>
 <script src="bower_components/kubernetes-container-terminal/dist/container-terminal.js"></script>
+<link rel="stylesheet" href="bower_components/kubernetes-container-terminal/dist/xterm.css" />
 <link rel="stylesheet" href="bower_components/kubernetes-container-terminal/dist/container-terminal.css" />
 ```
 
