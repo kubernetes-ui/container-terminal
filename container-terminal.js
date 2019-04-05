@@ -105,6 +105,9 @@
                         var defaultCols = 80;
                         var defaultRows = 24;
 
+                        /* Whether the component is preventing a connection */
+                        var preventing = true;
+
                         var term = new Terminal({
                             cols: scope.cols || defaultCols,
                             rows: scope.rows || defaultRows,
@@ -154,6 +157,7 @@
                         };
 
                         function connect() {
+                            preventing = false;
                             disconnect();
 
                             term.reset();
@@ -270,7 +274,7 @@
                         scope.$watchGroup(["cols", "rows"], sizeTerminal);
 
                         scope.$watch("prevent", function(prevent) {
-                            if (!prevent)
+                            if (!prevent && preventing)
                                 connect();
                         });
 
